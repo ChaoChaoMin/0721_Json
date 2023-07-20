@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <select name="cityN" id="cityName"></select>
+    <select name="zipCode" id="zipCode"></select>
+    <select name="areaN" id="areaName"></select>
+    <select name="roadN" id="roadName"></select>
+
+
+    <script type="module">
+        //原：<script type="module" src="./address.json"> 去掉src部分
+
+        import myJson from './address.json' assert { type: 'json' };
+        //JSON.parse(myJson); 不需要，import进来就是json type了
+        //console.log(myJson[CityName]); 引用方式错误，应该用下面的
+        console.log(myJson[0].CityName);
+        console.log(myJson[0].AreaList[5].AreaName);
+
+
+        //新增城市 
+        let cityOpt = document.createDocumentFragment();
+        for (let i = 0; i < myJson.length; i++) {
+            // console.log(myJson[i].CityName;
+            let optC = document.createElement("option");
+            optC.setAttribute("value", myJson[i].CityName);
+            // console.log(myJson[i].CityName);
+            let optCText = document.createTextNode(myJson[i].CityName);
+            optC.appendChild(optCText);
+            cityOpt.appendChild(optC);
+        }
+        document.getElementById('cityName').appendChild(cityOpt);
+
+
+        //新增郵遞區號
+        let zipOpt = document.createDocumentFragment();
+        for (let i = 0; i < myJson.length; i++) {
+            for (let v = 0; v < myJson[i].AreaList.length; v++) {
+                let optZ = document.createElement("option");
+                optZ.setAttribute("value", myJson[i].AreaList[v].ZipCode);
+                let optZText = document.createTextNode(myJson[i].AreaList[v].ZipCode);
+                optZ.appendChild(optZText);
+                zipOpt.appendChild(optZ);
+            }
+        }
+        document.getElementById('zipCode').appendChild(zipOpt);
+
+
+        //新增區域
+        let areaOpt = document.createDocumentFragment();
+        for (let i = 0; i < myJson.length; i++) {
+            for (let v = 0; v < myJson[i].AreaList.length; v++) {
+                let optA = document.createElement("option");
+                optA.setAttribute("value", myJson[i].AreaList[v].AreaName);
+                let optAText = document.createTextNode(myJson[i].AreaList[v].AreaName);
+                optA.appendChild(optAText);
+                areaOpt.appendChild(optA);
+            }
+        }
+        document.getElementById('areaName').appendChild(areaOpt);
+
+
+        //新增路名
+        let roadOpt = document.createDocumentFragment();
+        for (let i = 0; i < myJson.length; i++) {
+            for (let v = 0; v < myJson[i].AreaList.length; v++) {
+                for (let y = 0; y < myJson[i].AreaList[v].RoadList.length; y++) {
+                    let optR = document.createElement("option");
+                    optR.setAttribute("value", myJson[i].AreaList[v].RoadList[y].RoadName);
+                    // console.log(myJson[i].AreaList[v].RoadList[y].RoadName);
+                    let optRText = document.createTextNode(myJson[i].AreaList[v].RoadList[y].RoadName);
+                    optR.appendChild(optRText);
+                    roadOpt.appendChild(optR);
+                }
+            }
+        }
+        document.getElementById('roadName').appendChild(roadOpt);
+
+    </script>
+</body>
+
+</html>
