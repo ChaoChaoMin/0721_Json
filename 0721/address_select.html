@@ -16,11 +16,8 @@
 
 
     <script type="module">
-        //原：<script type="module" src="./address.json"> 去掉src部分
 
         import myJson from './address.json' assert { type: 'json' };
-        //JSON.parse(myJson); 不需要，import进来就是json type了
-        //console.log(myJson[CityName]); 引用方式错误，应该用下面的
         console.log(myJson[0].CityName);
         console.log(myJson[0].AreaList[5].AreaName);
 
